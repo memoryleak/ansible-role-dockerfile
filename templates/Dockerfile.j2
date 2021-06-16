@@ -1,0 +1,55 @@
+# {{ ansible_managed }}
+FROM {{ dockerfile_from }}
+MAINTAINER {{ dockerfile_maintainer }}
+
+{% if dockerfile_user != false %}
+USER {{ dockerfile_user }}
+{% endif %}
+
+{% if dockerfile_label | length > 0 %}
+{% include 'partials/label.j2' %}
+{% endif %}
+
+{% if dockerfile_args | length > 0 %}
+{% include 'partials/args.j2' %}
+{% endif %}
+
+{% if dockerfile_env | length > 0 %}
+{% include 'partials/env.j2' %}
+{% endif %}
+
+{% if dockerfile_run | length > 0 %}
+{% include 'partials/run.j2' %}
+{% endif %}
+
+{% if dockerfile_add | length > 0 %}
+{% include 'partials/add.j2' %}
+{% endif %}
+
+{% if dockerfile_copy | length > 0 %}
+{% include 'partials/copy.j2' %}
+{% endif %}
+
+{% if dockerfile_expose | length > 0 %}
+{% include 'partials/expose.j2' %}
+{% endif %}
+
+{% if dockerfile_volume | length > 0 %}
+{% include 'partials/volume.j2' %}
+{% endif %}
+
+{% if dockerfile_onbuild | length > 0 %}
+{% include 'partials/onbuild.j2' %}
+{% endif %}
+
+{% if dockerfile_workdir != false %}
+WORKDIR {{ dockerfile_workdir }}
+{% endif %}
+
+{% if dockerfile_cmd != false %}
+CMD {{ dockerfile_cmd }}
+{% endif %}
+
+{% if dockerfile_entrypoint != false %}
+ENTRYPOINT {{ dockerfile_entrypoint }}
+{% endif %}

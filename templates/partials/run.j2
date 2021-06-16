@@ -1,0 +1,8 @@
+{% if dockerfile_run_merge %}
+# Create single run command to minimize layers
+RUN {{ dockerfile_run | join(' && \\\n') }}
+{% else %}
+{% for run in dockerfile_run %}
+RUN {{ run }}
+{% endfor %}
+{% endif %}

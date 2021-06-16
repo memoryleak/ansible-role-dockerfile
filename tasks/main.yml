@@ -1,0 +1,40 @@
+---
+# tasks file for memoryleak.dockerfile
+- name: Include stat tasks
+  include: "stat.yml"
+  tags:
+    - include
+    - stat
+    - dirs
+
+- name: "Create Dockerfile for {{ dockerfile_repository }}:{{ dockerfile_tag }}"
+  template:
+    dest: "{{ dockerfile_build_dir }}/Dockerfile"
+    lstrip_blocks: true
+    mode: 0755
+    src: "Dockerfile.j2"
+    trim_blocks: trim
+  tags:
+    - template
+    - dockerfile
+    - docker
+
+- name: "Build Dockerfile for {{ dockerfile_repository }}:{{ dockerfile_tag }}"
+  docker_image:
+    build:
+      path: "{{ dockerfile_build_dir }}"
+      pull: false
+      nocache: true
+      rm: true
+    source: "build"
+    force_source: true
+    force_tag: true
+    name: "{{ dockerfile_name }}"
+    push: "{{ dockerfile_push }}"
+    repository: "{{ dockerfile_repository }}"
+    state: present
+    tag: "{{ dockerfile_tag }}"
+
+  tags:
+    - docker_image
+    - dockerfile

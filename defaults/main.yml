@@ -1,0 +1,24 @@
+---
+# defaults file for memoryleak.dockerfile
+dockerfile_from: "alpine:latest"
+dockerfile_maintainer: "Ansible"
+dockerfile_user: false
+dockerfile_label: []
+dockerfile_args: []
+dockerfile_env: []
+dockerfile_run: []
+dockerfile_add: []
+dockerfile_copy: []
+dockerfile_expose: []
+dockerfile_volume: []
+dockerfile_onbuild: []
+dockerfile_workdir: false
+dockerfile_build_dir: build
+dockerfile_cmd: false
+dockerfile_entrypoint: false
+dockerfile_run_merge: true
+dockerfile_push: false
+dockerfile_name: "test"
+dockerfile_tag: "latest"
+dockerfile_namespace: "memoryleak"
+dockerfile_repository: "{{ dockerfile_namespace }}/{{ dockerfile_name }}"

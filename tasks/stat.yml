@@ -1,0 +1,17 @@
+---
+- name: Check if {{ dockerfile_build_dir }} exists
+  stat:
+    path: "{{ dockerfile_build_dir }}"
+  register: dockerfile_build_dir_stat
+  tags:
+    - stat
+    - directory
+
+- name: Create {{ dockerfile_build_dir }}
+  file:
+    path: "{{ dockerfile_build_dir }}"
+    state: directory
+  tags:
+    - file
+    - directory
+  when: dockerfile_build_dir_stat.stat.exists == false

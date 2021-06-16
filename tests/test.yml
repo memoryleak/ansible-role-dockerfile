@@ -1,0 +1,8 @@
+---
+- hosts:
+    localhost
+  vars:
+    ansible_connection: local
+    ansible_interpreter_python: /usr/bin/python3
+  roles:
+    - memoryleak.dockerfile
