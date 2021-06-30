@@ -18,7 +18,7 @@ dockerfile_cmd: false
 dockerfile_entrypoint: false
 dockerfile_run_merge: true
 dockerfile_push: false
+dockerfile_repository: "acme"
 dockerfile_name: "test"
 dockerfile_tag: "latest"
-dockerfile_namespace: "memoryleak"
-dockerfile_repository: "{{ dockerfile_namespace }}/{{ dockerfile_name }}"
+dockerfile_registry: false

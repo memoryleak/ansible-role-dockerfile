@@ -28,12 +28,12 @@
       rm: true
     source: "build"
     force_source: true
-    force_tag: true
+    force_tag: false
     name: "{{ dockerfile_name }}"
+    tag: "{{ dockerfile_tag }}"
     push: "{{ dockerfile_push }}"
     repository: "{{ dockerfile_repository }}"
     state: present
-    tag: "{{ dockerfile_tag }}"
 
   tags:
     - docker_image
