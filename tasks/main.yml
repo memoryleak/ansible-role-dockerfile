@@ -7,7 +7,7 @@
     - stat
     - dirs
 
-- name: "Create Dockerfile for {{ dockerfile_repository }}:{{ dockerfile_tag }}"
+- name: "Create Dockerfile for {{ dockerfile_repository }}/{{ dockerfile_name }}:{{ dockerfile_tag }}"
   template:
     dest: "{{ dockerfile_build_dir }}/Dockerfile"
     lstrip_blocks: true
@@ -19,7 +19,7 @@
     - dockerfile
     - docker
 
-- name: "Build Dockerfile for {{ dockerfile_repository }}:{{ dockerfile_tag }}"
+- name: "Build Dockerfile for {{ dockerfile_repository }}/{{ dockerfile_name }}:{{ dockerfile_tag }}"
   docker_image:
     build:
       path: "{{ dockerfile_build_dir }}"
@@ -29,12 +29,23 @@
     source: "build"
     force_source: true
     force_tag: false
-    name: "{{ dockerfile_name }}"
+    name: "{{ dockerfile_repository }}/{{ dockerfile_name }}"
     tag: "{{ dockerfile_tag }}"
-    push: "{{ dockerfile_push }}"
-    repository: "{{ dockerfile_repository }}"
     state: present
 
   tags:
     - docker_image
     - dockerfile
+
+- name: Push image to registry
+  docker_image:
+    source: "local"
+    name: "{{ dockerfile_repository }}/{{ dockerfile_name }}"
+    push: true
+    repository: "{{ dockerfile_registry }}/{{ dockerfile_repository }}/{{ dockerfile_name }}"
+    state: present
+    tag: "{{ dockerfile_tag }}"
+  tags:
+    - docker_image
+    - dockerfile
+  when: dockerfile_push
